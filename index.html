@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Assessment Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Class Performance Portal</h1>
+            <button id="logoutBtn" class="hidden">Logout</button>
+        </header>
+
+        <section id="loginSection">
+            <div class="card">
+                <h2>Student / Admin Login</h2>
+                <input type="text" id="username" placeholder="Pseudo Name / Username">
+                <input type="password" id="password" placeholder="Password">
+                <button onclick="handleLogin()">Enter</button>
+                <p id="loginError" class="error hidden">Invalid credentials</p>
+            </div>
+        </section>
+
+        <section id="dashboard" class="hidden">
+            <h2 id="welcomeMsg">Welcome</h2>
+            
+            <div class="tabs">
+                <button class="tab-link active" onclick="switchTab('assessment')">Assessment</button>
+                <button class="tab-link" onclick="switchTab('attendance')">Attendance</button>
+                <button class="tab-link" onclick="switchTab('overall')">Overall Calculator</button>
+            </div>
+
+            <div id="assessment" class="tab-content active">
+                <div class="toggle-view">
+                    <button onclick="toggleAssessmentView('personal')">My Score</button>
+                    <button onclick="toggleAssessmentView('leaderboard')">Leaderboard</button>
+                </div>
+                
+                <div id="assessPersonal" class="sub-view">
+                    <div class="score-circle">
+                        <span id="assessScoreDisplay">0</span>
+                        <span class="total">/ 20</span>
+                    </div>
+                    <p class="note">Based on relative performance (Top score = 20/20).</p>
+                </div>
+
+                <div id="assessLeaderboard" class="sub-view hidden">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Position</th>
+                                <th>Scaled Score (/20)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="attendance" class="tab-content">
+                <div class="score-card">
+                    <h3>Days Present</h3>
+                    <p id="daysPresentDisplay" class="large-text">0 / 19</p>
+                </div>
+                <div class="score-card highlight">
+                    <h3>Attendance Score</h3>
+                    <p id="attendScoreDisplay" class="large-text">0 / 20</p>
+                    <p class="small">Base 1 point + 1 point per day present.</p>
+                </div>
+            </div>
+
+            <div id="overall" class="tab-content">
+                <div class="breakdown">
+                    <div class="mini-stat">Assess: <span id="ovAssess">0</span></div>
+                    <div class="mini-stat">Attend: <span id="ovAttend">0</span></div>
+                    <div class="mini-stat">Mid: <span id="ovMid">0</span>/30</div>
+                </div>
+                
+                <div class="calculator">
+                    <h3>Final Exam Projector</h3>
+                    <p>Enter hypothetical marks for your final exam (out of 30) to see your total Grade.</p>
+                    <input type="number" id="finalInput" placeholder="Enter Final Marks (0-30)" oninput="calculateTotal()">
+                    
+                    <div class="result-box">
+                        <span>Projected Total:</span>
+                        <span id="projectedTotal" class="big-number">0</span>
+                    </div>
+
+                    <div class="targets">
+                        <h4>Requirements to reach target:</h4>
+                        <div class="target-row">
+                            <span>To get <strong>80%</strong>:</span>
+                            <span id="req80">--</span>
+                        </div>
+                        <div class="target-row">
+                            <span>To get <strong>75%</strong>:</span>
+                            <span id="req75">--</span>
+                        </div>
+                        <div class="target-row">
+                            <span>To get <strong>70%</strong>:</span>
+                            <span id="req70">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="adminPanel" class="hidden">
+            <h2>Admin Dashboard</h2>
+            <p>Edit values below. Click "Export Data" to generate the code to update your GitHub file.</p>
+            <div class="admin-controls">
+                <button onclick="addNewStudent()">+ Add Student</button>
+                <button class="save-btn" onclick="exportData()">Export Data for GitHub</button>
+            </div>
+            <div id="adminTableContainer">
+                </div>
+            <textarea id="exportArea" readonly placeholder="Copy the code from here after clicking Export..."></textarea>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
